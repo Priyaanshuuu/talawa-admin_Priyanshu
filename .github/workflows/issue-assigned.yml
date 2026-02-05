@@ -1,0 +1,11 @@
+name: Issue Assignment Workflow
+
+on:
+  issues:
+    types: [assigned]
+
+jobs:
+  issue-assigned:
+    uses: PalisadoesFoundation/.github/.github/workflows/issue-assigned.yml@main
+    # secrets:
+    #   ORG_ACCESS_TOKEN: ${{ secrets.ORG_ACCESS_TOKEN }}

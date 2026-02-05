@@ -1,0 +1,65 @@
+.activeTab {
+  background-color: var(--color-gray-100);
+  color: var(--color-gray-400);
+  border-color: var(--color-gray-400);
+  align-items: center;
+  position: relative;
+  outline: none;
+}
+
+.activeTab:focus-visible {
+  outline: var(--border-2) solid var(--color-gray-400);
+  outline-offset: var(--shadow-offset-sm);
+}
+
+.activeTab:is(:hover, :focus, :active) {
+  background-color: var(--color-gray-500);
+  color: var(--color-white);
+  border-color: var(--color-gray-500);
+  align-items: center;
+}
+
+.inActiveTab {
+  background-color: var(--color-gray-100);
+  color: var(--color-gray-400);
+  border-color: var(--color-gray-400);
+  align-items: center;
+  position: relative;
+  outline: none;
+}
+
+.inActiveTab:focus-visible {
+  outline: var(--border-2) solid var(--color-gray-400);
+  outline-offset: var(--shadow-offset-sm);
+}
+
+.inActiveTab:is(:hover, :focus, :active) {
+  background-color: var(--color-gray-100);
+  color: var(--color-gray-400);
+  border-color: var(--color-gray-500);
+  align-items: center;
+}
+
+.dropdown {
+  background-color: var(--color-gray-50);
+  min-width: var(--space-15);
+  border: var(--border-1) solid var(--color-gray-700);
+  color: var(--color-gray-700);
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown:is(:hover, :active, .show, :disabled, :checked) {
+  box-shadow:
+    0 var(--shadow-offset-xs) var(--shadow-blur-sm) var(--shadow-spread-none)
+      rgba(168, 199, 250, 1),
+    0 var(--shadow-offset-md) var(--shadow-blur-lg) var(--shadow-spread-sm)
+      rgba(60, 64, 67, 0.15);
+  border: var(--border-1) solid var(--color-gray-700);
+  color: var(--color-gray-700);
+}
+
+.dropdown:is(:focus, :focus-visible) {
+  outline: var(--border-2) solid var(--color-blue-200);
+  border: var(--border-1) solid var(--color-gray-700);
+}

@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "types": [
+      "react",
+      "react-dom",
+      "vite/client",
+      "vite-plugin-svgr/client",
+      "node",
+      "vitest/globals"
+    ],
+    "baseUrl": "src",
+    "target": "es2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx"
+  },
+  "include": ["src", "src/App.tsx", "setup.ts"],
+  "exclude": ["node_modules", "dist", "vitest.config.ts"]
+}

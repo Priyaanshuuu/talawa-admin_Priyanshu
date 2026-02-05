@@ -1,0 +1,71 @@
+.createButton {
+  background-color: var(--color-gray-50);
+  color: var(--color-gray-700);
+  border: var(--border-1) solid var(--color-gray-700);
+  padding: var(--space-4) var(--space-4);
+}
+
+.closeButton {
+  color: var(--color-red-500);
+  border: none;
+  background-color: var(--color-white);
+}
+
+.createButton:hover {
+  box-shadow: var(--shadow-xs);
+  background-color: var(--color-gray-50);
+  color: var(--color-gray-900);
+  border: var(--border-1) solid var(--color-gray-700);
+}
+
+.createButton:active {
+  color: var(--color-gray-400);
+  background-color: var(--color-gray-100);
+  border: var(--border-1) solid var(--color-gray-400);
+}
+
+.list_box {
+  height: 70vh;
+  overflow-y: auto;
+  width: auto;
+}
+
+.head {
+  min-width: 0;
+}
+
+.postContainer {
+  min-width: 0;
+}
+
+.mainpagerightOrgPost {
+  min-width: 0;
+}
+
+.addPost {
+  min-width: 0;
+}
+
+.noPostsFound {
+  min-width: 0;
+}
+
+.postInfiniteScroll {
+  min-width: 0;
+}
+
+.createPostModalContainer {
+  min-width: 0;
+}
+
+.pinnedPostModal {
+  min-width: 0;
+}
+
+.pinnedPostModalBody {
+  min-width: 0;
+}
+
+.closeButtonIcon {
+  min-width: 0;
+}

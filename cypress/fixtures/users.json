@@ -1,0 +1,17 @@
+{
+  "superAdmin": {
+    "email": "administrator@email.com",
+    "name": "administrator",
+    "password": "password"
+  },
+  "admin": {
+    "email": "administrator@email.com",
+    "name": "administrator",
+    "password": "password"
+  },
+  "user": {
+    "email": "administrator@email.com",
+    "name": "administrator",
+    "password": "password"
+  }
+}

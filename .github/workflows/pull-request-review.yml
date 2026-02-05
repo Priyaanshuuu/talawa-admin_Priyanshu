@@ -1,0 +1,9 @@
+name: Pull Request Review
+
+on:
+  pull_request_review:
+    types: [submitted, edited, dismissed]
+
+jobs:
+  Check-CodeRabbit-Approval:
+    uses: PalisadoesFoundation/.github/.github/workflows/pull-request-review.yml@main

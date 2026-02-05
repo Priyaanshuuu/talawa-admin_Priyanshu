@@ -1,0 +1,21 @@
+.dataTableWrapper {
+  composes: dataTableWrapper from '../../style/app-fixed.module.css';
+}
+.dataTableBase {
+  composes: dataTableBase from '../../style/app-fixed.module.css';
+}
+.toolbar {
+  composes: toolbar from '../../style/app-fixed.module.css';
+}
+.dataErrorState {
+  composes: dataErrorState from '../../style/app-fixed.module.css';
+}
+.dataErrorDetails {
+  composes: dataErrorDetails from '../../style/app-fixed.module.css';
+}
+.dataEmptyState {
+  composes: dataEmptyState from '../../style/app-fixed.module.css';
+}
+.bulkBtn {
+  composes: bulkBtn from '../../style/app-fixed.module.css';
+}

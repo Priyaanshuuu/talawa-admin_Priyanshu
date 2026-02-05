@@ -1,0 +1,10 @@
+name: PR Target Workflow
+
+on:
+  pull_request_target:
+
+jobs:
+  PR-Greeting:
+    uses: PalisadoesFoundation/.github/.github/workflows/pr-target-policy.yml@main
+    secrets:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

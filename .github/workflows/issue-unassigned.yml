@@ -1,0 +1,9 @@
+name: Add Unapproved Label on Unassignment
+
+on:
+  issues:
+    types: [unassigned]
+
+jobs:
+  issue-unassigned:
+    uses: PalisadoesFoundation/.github/.github/workflows/issue-unassigned.yml@main

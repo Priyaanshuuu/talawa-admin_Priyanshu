@@ -1,0 +1,131 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+
+# Configuration Metadata
+# Version: 2.0
+# Last Updated: 2026-01-08
+# Purpose: Comprehensive review validation with reusable component architecture enforcement
+
+language: 'en-US'
+
+early_access: false
+
+chat:
+  auto_reply: true
+
+issue_enrichment:
+  auto_enrich:
+    enabled: false
+
+# ADVISORY GUIDELINES (Guides the AI reviewer during manual reviews)
+reviews:
+  profile: 'assertive'
+  poem: false
+  request_changes_workflow: false
+  high_level_summary: true
+  review_status: true
+  review_details: false
+  collapse_walkthrough: false
+  auto_apply_labels: false
+  suggested_labels: false
+  assess_linked_issues: true
+  auto_review:
+    enabled: true
+    drafts: false
+    base_branches:
+      - develop
+      - main
+  path_filters:
+    - '!**/docs/docs/**'
+    - '!*.html'
+    - '!*.md'
+    - '!*.svg'
+
+  # Keep instructions concise and scoped by file patterns to stay far under limits
+  path_instructions:
+    # 1) Tests — Vitest + RTL + sharded stability
+    - path: '**/*.{spec,test}.{ts,tsx}'
+      instructions: |
+        Post a single, structured comment with these sections: Issue Goals, Tests (incl. Flakiness), Components/Policy, GraphQL, i18n & a11y, Security, Action Items.
+        Reference exact file:line for each finding.
+
+        Issue goals (Priority `#1`):
+        - Parse the first PR comment for "Fixes/Closes/Resolves #<id>". Confirm every acceptance criterion is tested; list gaps with file:line.
+
+        Test quality (Vitest + RTL):
+        - Use vi.mock; prefer accessible queries (getByRole/LabelText); use user-event.
+        - Cover success, error (network/GraphQL/validation), edge/empty states, loading, and user interactions.
+        - List uncovered line numbers in changed source files.
+
+        Flaky test guard (12 shards):
+        - Each file: afterEach(() => cleanup()); and vi.clearAllMocks() or vi.restoreAllMocks().
+        - No hardcoded setTimeout/fixed delays; use waitFor for async assertions.
+        - No shared module/global state without cleanup (localStorage/sessionStorage/window); tests independent, no order dependence.
+        - Respect 30s timeout; avoid race conditions across shards.
+
+        Structure:
+        - No it.skip/describe.skip unless commented with reason + linked issue.
+        - Wrap state updates in act() when needed.
+
+    # 2) React components/screens/pages — enforce architecture & policy
+    - path: 'src/{components,screens,pages}/**/*.{ts,tsx}'
+      instructions: |
+        Post a single, structured comment; reference file:line for each item.
+        If the file is a test (*.spec|*.test), apply the test checklist instead and skip this block.
+
+        Issue goals:
+        - Map changes to the linked issue’s acceptance criteria; flag unaddressed or out‑of‑scope work.
+
+        Reusable component policy (see: https://docs-admin.talawa.io/docs/developer-resources/reusable-components/):
+        - Placement: Admin-only → src/components/AdminPortal/** (+ src/types/AdminPortal/**);
+          User-only → src/components/UserPortal/** (+ src/types/UserPortal/**);
+          Shared → src/shared-components/** (+ src/types/shared-components/**).
+        - Naming: PascalCase folder/file/component; names must match.
+        - Props: NO inline prop interfaces; define in src/types/<Portal or shared-components>/<Component>/interface.ts (e.g., Interface<Component>Props).
+        - Restricted imports: use shared wrappers (DataGridWrapper, LoadingState, BaseModal, Date/Time pickers, etc.); direct imports allowed only inside wrappers.
+        - Brief TSDoc on exported components and interfaces.
+
+        TypeScript & React:
+        - No any without JSDoc justification; strong types for props/params/returns/state/GQL types.
+        - Hooks: proper cleanup in useEffect; avoid prop drilling (use Context/Redux).
+        - MUI v7: import from `@mui/material`; styling via `@emotion/react`.
+
+        i18n & a11y:
+        - No hardcoded UI strings; use useTranslation with keys; add new keys to all 5 locales (en, es, fr, hi, zh).
+        - Ensure roles/ARIA (aria-label/aria-describedby/aria-live), keyboard navigation, and semantic markup.
+
+    # 3) GraphQL operations
+    - path: 'src/GraphQl/**/*.ts'
+      instructions: |
+        Post a single, structured comment; reference file:line.
+
+        Organization & typing:
+        - Queries in src/GraphQl/Queries/; mutations in src/GraphQl/Mutations/.
+        - Use gql (graphql-tag) with typed variables/results; add brief JSDoc.
+
+        Correctness & duplication:
+        - No duplicate or conflicting operations; watch pagination params (first/last).
+        - Components using these operations must handle loading and error states in UI.
+
+  pre_merge_checks:
+    # Enforce test file updates for modified source files
+    custom_checks:
+      - name: 'Test Coverage Gate'
+        mode: 'error'
+        instructions: |
+          BLOCKING: Test coverage must be ≥95% for modified files.
+          Run: pnpm run test:coverage
+          Verify: coverage/coverage-summary.json shows no files below threshold.
+
+      - name: 'TypeScript Compilation'
+        mode: 'error'
+        instructions: |
+          BLOCKING: Zero TypeScript errors.
+          Run: pnpm run typecheck
+          Must pass without errors or warnings.
+
+      - name: 'Component Architecture Compliance'
+        mode: 'error'
+        instructions: |
+          BLOCKING: All components follow reusable component policy.
+          Verify: No inline interfaces, correct portal placement, wrapper usage.
+          See: https://docs-admin.talawa.io/docs/developer-resources/reusable-components/
